@@ -15,7 +15,7 @@ CURRENT_USER=$(whoami)
 # 定义颜色
 CYAN='\e[0;36m'
 WHITE='\e[0;37m'
-RED='\e[0;91m'
+RED='\e[0;31m'
 GREEN='\e[0;32m'
 YELLOW='\e[0;33m'
 RESET_COLOR='\e[0m'
@@ -205,7 +205,7 @@ printf "\n\033[1;36m############################################################
 printf "\033[1;33m#                                                                              #\033[0m\n"
 printf "\033[1;33m#   \033[1;35m作者: 康康\033[1;33m                                                            #\033[0m\n"
 printf "\033[1;33m#   \033[1;34mGithub: https://github.com/zhumengkang/\033[1;33m                              #\033[0m\n"
-printf "\033[1;33m#   \033[1;91mYouTube: https://www.youtube.com/@康康的V2Ray与Clash\033[1;33m                  #\033[0m\n"
+printf "\033[1;33m#   \033[1;31mYouTube: https://www.youtube.com/@康康的V2Ray与Clash\033[1;33m                  #\033[0m\n"
 printf "\033[1;33m#   \033[1;36mTelegram: https://t.me/+WibQp7Mww1k5MmZl\033[1;33m                           #\033[0m\n"
 printf "\033[1;33m#                                                                              #\033[0m\n"
 printf "\033[1;33m################################################################################\033[0m\n"

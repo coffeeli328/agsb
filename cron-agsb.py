@@ -91,7 +91,7 @@ def upload_to_api(subscription_content):
     try:
         # 确保requests库已导入
         if 'requests' not in sys.modules:
-            print("\033[36m│ \033[91m未能导入requests库，跳过上传\033[0m")
+            print("\033[36m│ \033[31m未能导入requests库，跳过上传\033[0m")
             return False
             
         write_debug_log("开始上传订阅内容到API服务器")
@@ -106,7 +106,7 @@ def upload_to_api(subscription_content):
                 f.write(subscription_content)
         except Exception as e:
             write_debug_log(f"创建临时文件失败: {e}")
-            print(f"\033[36m│ \033[91m创建临时文件失败: {e}\033[0m")
+            print(f"\033[36m│ \033[31m创建临时文件失败: {e}\033[0m")
             return False
             
         # 构建multipart表单数据
@@ -143,20 +143,20 @@ def upload_to_api(subscription_content):
                         return True
                     else:
                         write_debug_log(f"API返回错误: {result}")
-                        print(f"\033[36m│ \033[91mAPI返回错误: {result}\033[0m")
+                        print(f"\033[36m│ \033[31mAPI返回错误: {result}\033[0m")
                         return False
                 except Exception as e:
                     write_debug_log(f"解析API响应失败: {e}")
-                    print(f"\033[36m│ \033[91m解析API响应失败: {e}\033[0m")
+                    print(f"\033[36m│ \033[31m解析API响应失败: {e}\033[0m")
                     return False
             else:
                 write_debug_log(f"上传失败，状态码: {response.status_code}")
-                print(f"\033[36m│ \033[91m上传失败，状态码: {response.status_code}\033[0m")
+                print(f"\033[36m│ \033[31m上传失败，状态码: {response.status_code}\033[0m")
                 return False
                 
         except Exception as e:
             write_debug_log(f"上传过程中出错: {e}")
-            print(f"\033[36m│ \033[91m上传过程中出错: {e}\033[0m")
+            print(f"\033[36m│ \033[31m上传过程中出错: {e}\033[0m")
             
             # 清理临时文件
             if os.path.exists(str(temp_file)):
@@ -169,7 +169,7 @@ def upload_to_api(subscription_content):
             
     except Exception as e:
         write_debug_log(f"上传订阅到API服务器失败: {e}")
-        print(f"\033[36m│ \033[91m上传订阅到API服务器失败: {e}\033[0m")
+        print(f"\033[36m│ \033[31m上传订阅到API服务器失败: {e}\033[0m")
         return False
 
 # 测试API连接
@@ -180,7 +180,7 @@ def test_api_connection():
     """
     try:
         if 'requests' not in sys.modules:
-            print("\033[91m未安装requests库，请先安装: pip install requests\033[0m")
+            print("\033[31m未安装requests库，请先安装: pip install requests\033[0m")
             return False
             
         print("正在测试API服务器连接...")
@@ -192,10 +192,10 @@ def test_api_connection():
             print(f"\033[32mAPI服务器连接正常，状态码: {response.status_code}\033[0m")
             return True
         else:
-            print(f"\033[91mAPI服务器连接异常，状态码: {response.status_code}\033[0m")
+            print(f"\033[31mAPI服务器连接异常，状态码: {response.status_code}\033[0m")
             return False
     except Exception as e:
-        print(f"\033[91m测试API服务器连接出错: {e}\033[0m")
+        print(f"\033[31m测试API服务器连接出错: {e}\033[0m")
         return False
 
 # 脚本信息
@@ -884,7 +884,7 @@ def check_status():
                         argodomain = domain_match.group(1)
                         print(f"\033[36m│ \033[32mArgo临时域名: \033[0m{argodomain}")
                     else:
-                        print("\033[36m│ \033[91mArgo临时域名未生成，请重新安装\033[0m")
+                        print("\033[36m│ \033[31mArgo临时域名未生成，请重新安装\033[0m")
             
             # 显示节点信息
             print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
@@ -925,7 +925,7 @@ def check_status():
             print("\033[36m╭───────────────────────────────────────────────────────────────╮\033[0m")
             print("\033[36m│                \033[33m✨ ArgoSB 运行状态 ✨                    \033[36m│\033[0m")
             print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
-            print("\033[36m│ \033[91mArgoSB脚本未运行\033[0m")
+            print("\033[36m│ \033[31mArgoSB脚本未运行\033[0m")
             print("\033[36m│ \033[32m运行 \033[33mpython3 agsb.py\033[32m 开始安装\033[0m")
             print("\033[36m╰───────────────────────────────────────────────────────────────╯\033[0m")
             return False
@@ -933,7 +933,7 @@ def check_status():
             print("\033[36m╭───────────────────────────────────────────────────────────────╮\033[0m")
             print("\033[36m│                \033[33m✨ ArgoSB 运行状态 ✨                    \033[36m│\033[0m")
             print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
-            print("\033[36m│ \033[91mArgoSB脚本状态异常\033[0m")
+            print("\033[36m│ \033[31mArgoSB脚本状态异常\033[0m")
             print("\033[36m│ \033[32m建议卸载后重新安装: \033[33mpython3 agsb.py del\033[0m")
             print("\033[36m╰───────────────────────────────────────────────────────────────╯\033[0m")
             return False
@@ -941,7 +941,7 @@ def check_status():
         print("\033[36m╭───────────────────────────────────────────────────────────────╮\033[0m")
         print("\033[36m│                \033[33m✨ ArgoSB 运行状态 ✨                    \033[36m│\033[0m")
         print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
-        print(f"\033[36m│ \033[91m检查状态时出错: {e}\033[0m")
+        print(f"\033[36m│ \033[31m检查状态时出错: {e}\033[0m")
         print("\033[36m╰───────────────────────────────────────────────────────────────╯\033[0m")
         return False
 
@@ -1091,7 +1091,7 @@ def main():
                     for link in all_links:
                         print(link)
             else:
-                print("\033[91m找不到节点文件，请先安装或运行status命令\033[0m")
+                print("\033[31m找不到节点文件，请先安装或运行status命令\033[0m")
             sys.exit(0)
         elif action == "testapi":
             # 测试API服务器连接
@@ -1101,7 +1101,7 @@ def main():
             print("\033[36m╭───────────────────────────────────────────────────────────────╮\033[0m")
             print("\033[36m│                \033[33m✨ 未知命令 ✨                          \033[36m│\033[0m")
             print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
-            print(f"\033[36m│ \033[91m未知命令: {action}\033[0m")
+            print(f"\033[36m│ \033[31m未知命令: {action}\033[0m")
             print_usage()
             print("\033[36m╰───────────────────────────────────────────────────────────────╯\033[0m")
             sys.exit(1)
