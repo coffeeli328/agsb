@@ -363,7 +363,7 @@ def install(args):
         print(f"使用自定义域名: {custom_domain}")
         write_debug_log(f"Custom Domain (agn): {custom_domain}")
     elif argo_token: # 如果用了token，必须提供域名
-        print("\033[31m错误: 使用 Argo Tunnel Token 时必须提供自定义域名 (agn/--domain)。\033[0m")
+        print("\033[91m错误: 使用 Argo Tunnel Token 时必须提供自定义域名 (agn/--domain)。\033[0m")
         sys.exit(1)
     else:
         print("未提供自定义域名，将尝试在隧道启动后自动获取。")
@@ -468,18 +468,18 @@ def install(args):
         print("正在等待临时隧道域名生成...")
         final_domain = get_tunnel_domain()
         if not final_domain:
-            print("\033[31m无法获取tunnel域名。请检查argo.log或尝试手动指定域名。\033[0m")
+            print("\033[91m无法获取tunnel域名。请检查argo.log或尝试手动指定域名。\033[0m")
             print("  方法1: python3 " + os.path.basename(__file__) + " --agn your-domain.com")
             print("  方法2: export agn=your-domain.com && python3 " + os.path.basename(__file__))
             sys.exit(1)
     elif argo_token and not custom_domain: # Should have exited earlier, but as a safeguard
-        print("\033[31m错误: 使用Argo Token时，自定义域名是必需的但未提供。\033[0m")
+        print("\033[91m错误: 使用Argo Token时，自定义域名是必需的但未提供。\033[0m")
         sys.exit(1)
     
     if final_domain:
         generate_links(final_domain, port_vm_ws, uuid_str)
     else: # This case should ideally not be reached if logic above is correct
-        print("\033[31m最终域名未能确定，无法生成链接。\033[0m")
+        print("\033[91m最终域名未能确定，无法生成链接。\033[0m")
         sys.exit(1)
 
 
@@ -593,9 +593,9 @@ def upgrade():
             os.chmod(script_path, 0o755)
             print("\033[32m脚本升级完成！请重新运行脚本。\033[0m")
         else:
-            print("\033[31m升级失败，无法下载最新脚本。\033[0m")
+            print("\033[91m升级失败，无法下载最新脚本。\033[0m")
     except Exception as e:
-        print(f"\033[31m升级过程中出错: {e}\033[0m")
+        print(f"\033[91m升级过程中出错: {e}\033[0m")
     sys.exit(0)
 
 # 检查脚本运行状态
@@ -626,7 +626,7 @@ def check_status():
                     print(f"\033[36m│ \033[32mArgo临时域名: \033[0m{domain_to_display}")
         
         if domain_to_display == "未知":
-             print("\033[36m│ \033[31m域名信息未找到或未生成，请检查配置或日志。\033[0m")
+             print("\033[36m│ \033[91m域名信息未找到或未生成，请检查配置或日志。\033[0m")
 
         print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
         if (INSTALL_DIR / "allnodes.txt").exists():
@@ -649,12 +649,12 @@ def check_status():
     print("\033[36m│                \033[33m✨ ArgoSB 运行状态 ✨                    \033[36m│\033[0m")
     print("\033[36m├───────────────────────────────────────────────────────────────┤\033[0m")
     if status_msgs:
-        print("\033[36m│ \033[31mArgoSB 服务异常:\033[0m")
+        print("\033[36m│ \033[91mArgoSB 服务异常:\033[0m")
         for msg in status_msgs:
             print(f"\033[36m│   - {msg}\033[0m")
         print("\033[36m│ \033[32m尝试重新安装或检查日志: \033[33mpython3 " + os.path.basename(__file__) + " install\033[0m")
     else: # Should be caught by first if, but as a fallback
-         print("\033[36m│ \033[31mArgoSB 未运行或配置不完整。\033[0m")
+         print("\033[36m│ \033[91mArgoSB 未运行或配置不完整。\033[0m")
          print("\033[36m│ \033[32m运行 \033[33mpython3 " + os.path.basename(__file__) + "\033[32m 开始安装。\033[0m")
     print("\033[36m╰───────────────────────────────────────────────────────────────╯\033[0m")
     return False
@@ -781,14 +781,14 @@ def main():
         if all_nodes_path.exists():
             print(all_nodes_path.read_text().strip())
         else:
-            print(f"\033[31m节点文件 {all_nodes_path} 未找到。请先安装或运行 status。\033[0m")
+            print(f"\033[91m节点文件 {all_nodes_path} 未找到。请先安装或运行 status。\033[0m")
     else: # 默认行为，通常是 'install' 或者检查后提示
         if INSTALL_DIR.exists() and CONFIG_FILE.exists() and SB_PID_FILE.exists() and ARGO_PID_FILE.exists():
             print("\033[33m检测到ArgoSB可能已安装并正在运行。\033[0m")
             if check_status():
                  print("\033[32m如需重新安装，请先执行卸载: python3 " + os.path.basename(__file__) + " del\033[0m")
             else:
-                print("\033[31m服务状态异常，建议尝试重新安装。\033[0m")
+                print("\033[91m服务状态异常，建议尝试重新安装。\033[0m")
                 install(args) # 尝试重新安装
         else:
             print("\033[33m未检测到完整安装，开始执行安装流程...\033[0m")
